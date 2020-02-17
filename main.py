@@ -31,7 +31,7 @@ myGene = trainGenerator(2,'data/membrane/train','image','label',data_gen_args,sa
 #data = DataLoad.load3D()
 
 #model = isensee2017_model()
-model = getModel("vnet3D")
+model = getModel("unet3D")
 model_checkpoint = ModelCheckpoint('unet_membrane.hdf5', monitor='loss',verbose=1, save_best_only=True)
 
 model.save('Keras3d.hdf5')
@@ -45,12 +45,14 @@ X,Y = DataLoad.load3D_XY()
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=1)
 
 
-model.fit(X_train, y_train,batch_size=1,epochs=111,validation_split=0.2)
+
+
+model.fit(X_train, y_train,batch_size=1,epochs=13,validation_split=0.2)
 
 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)
 
-TestPrediction = model.predict(X_test)
+TestPrediction = model.predict(X_test ,batch_size=2)
 
 index =0
 for result in TestPrediction:
