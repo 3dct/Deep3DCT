@@ -35,3 +35,29 @@ def getModel(modelName = 'unet3D'):
 
     return execute_model
 
+
+def HyperparameterTune(x_train, y_train, x_val, y_val, params):
+
+    model = []
+
+    switcher = {
+        "unet": unet(),
+        "unet3D": unet3D(),
+        "vnet3D": vnet3D(),
+    }
+
+    selected_model = switcher.get(params["model"])
+
+    execute_model = selected_model
+
+    execute_model.compile(optimizer = Adam(lr = params["lr"], decay=params["lr_decay"]), loss = params["losses"], metrics = ['accuracy'])
+    execute_model.summary()
+
+    # enable live training plot
+    from talos import live
+    out = execute_model.fit(x_train, y_train,batch_size=1,epochs=params["epochs"],validation_data=[x_val, y_val],
+                     verbose=0, callbacks=[live()])
+
+    return out, execute_model
+    
+
