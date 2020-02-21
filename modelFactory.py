@@ -52,11 +52,12 @@ def HyperparameterTune(x_train, y_train, x_val, y_val, params):
 
     execute_model.compile(optimizer = Adam(lr = params["lr"], decay=params["lr_decay"]), loss = params["losses"], metrics = ['accuracy'])
     execute_model.summary()
+    from talos.utils import early_stopper
 
-    # enable live training plot
-    from talos import live
     out = execute_model.fit(x_train, y_train,batch_size=1,epochs=params["epochs"],validation_data=[x_val, y_val],
-                     verbose=0, callbacks=[live()])
+                     verbose=0, callbacks = [early_stopper(epochs=params['epochs'], 
+                                                    mode='strict', 
+                                                    monitor='val_accuracy')])
 
     return out, execute_model
     
