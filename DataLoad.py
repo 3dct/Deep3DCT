@@ -27,8 +27,8 @@ def load3D():
 
 
 def load3D_XY():
-    img1 = sitk.ReadImage('D:\PWeinberger\Data\Probe3_1000.mhd')
-    img2 = sitk.ReadImage('D:\PWeinberger\Data\Probe3_1000_bin_Inverted.mhd')
+    img1 = sitk.ReadImage('E:\PWeinberger\Data\Probe3_1000.mhd')
+    img2 = sitk.ReadImage('E:\PWeinberger\Data\Probe3_1000_bin_Inverted.mhd')
     normalizeFilter = sitk.NormalizeImageFilter()
 
     Data_X = [] 
