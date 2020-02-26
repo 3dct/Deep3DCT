@@ -9,12 +9,13 @@ X,Y = DataLoad.load3D_XY()
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=1)
 
 
-p = {'optimizer': ['Nadam', 'Adam'], #not used yet
+p = {'optimizer': ['Adam'], #not used yet
      'losses': ['binary_crossentropy', dice_coef_loss],
      'epochs': [10, 20],
      'lr':[ 1e-3, 1e-4, 1e-5],
      'lr_decay': [0.1, 0.25, 0.5],
-     'model':["unet3D"]}
+     'model':["unet3D"],
+     'stage2':[True, False]}
 
 
 

@@ -30,7 +30,7 @@ def getModel(modelName = 'unet3D'):
 
     execute_model = selected_model
 
-    execute_model.compile(optimizer = Adam(lr = 3e-3, decay=0.5), loss = dice_coef_loss, metrics = ['accuracy'])
+    execute_model.compile(optimizer = Adam(lr = 1e-4, decay=0.1), loss = dice_coef_loss, metrics = ['accuracy'])
     execute_model.summary()
 
     return execute_model
@@ -42,7 +42,7 @@ def HyperparameterTune(x_train, y_train, x_val, y_val, params):
 
     switcher = {
         "unet": unet(),
-        "unet3D": unet3D(),
+        "unet3D": unet3D(stage2=params["stage2"]),
         "vnet3D": vnet3D(),
     }
 
