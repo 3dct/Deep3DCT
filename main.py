@@ -47,7 +47,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_
 
 
 
-model.fit(X_train, y_train,batch_size=1,epochs=13,validation_split=0.2)
+model.fit(X_train, y_train,batch_size=1,epochs=20,validation_split=0.2)
 
 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)

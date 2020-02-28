@@ -13,7 +13,7 @@ from keras import backend as keras
 
 
 
-def unet3D(pretrained_weights = None,input_size = (128,128,128,1), stage2=False):
+def unet3D(pretrained_weights = None,input_size = (128,128,128,1), stage2=True):
     inputs = Input(input_size)
     conv1 = Conv3D(32, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(inputs)
     conv1 = Conv3D(32, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv1)
