@@ -47,7 +47,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_
 
 
 
-model.fit(X_train, y_train,batch_size=1,epochs=13,validation_split=0.2)
+model.fit(X_train, y_train,batch_size=1,epochs=20,validation_split=0.2)
 
 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)
@@ -58,6 +58,11 @@ index =0
 for result in TestPrediction:
     Show.transformSave(result,index)
     index = index +1
+
+
+for result in TestResults:
+    print(result)
+
 
 model.save('Keras3d.hdf5')
 
@@ -73,5 +78,5 @@ model.save('Keras3d.hdf5')
 onnx_model = keras2onnx.convert_keras(model, model.name,target_opset=8)
 
 import onnx
-temp_model_file = 'model.onnx'
+temp_model_file = 'model.onnx' 
 onnx.save(onnx_model, temp_model_file)
