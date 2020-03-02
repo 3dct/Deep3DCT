@@ -31,22 +31,34 @@ def load3D_XY():
     img2 = sitk.ReadImage('D:\PWeinberger\Data\Probe3_1000_bin_Inverted.mhd')
     normalizeFilter = sitk.NormalizeImageFilter()
 
+
     Data_X = [] 
     Data_Y = []
 
+    normalizedImage = normalizeFilter.Execute(img1)
+
+    MirrorPaddingFilter = sitk.MirrorPadImageFilter()
+
+    MirrorPaddingFilter.SetPadLowerBound([5,5,5])
+    MirrorPaddingFilter.SetPadUpperBound([5,5,5])
+    PaddedImage = MirrorPaddingFilter.Execute(normalizedImage)
+
     counter = 0
 
-    for x in range(0, 870, 128):
-            for y in range(0, 870, 128):
-                for z in range(0, 870, 128):
-                    image = sitk.RegionOfInterest(img1,(128,128,128),(x,y,z))
-                    mask = sitk.RegionOfInterest(img2,(128,128,128),(x,y,z))
+    for x in range(0, size_x-122, 122):
+            for y in range(0, size_y-122, 122):
+                for z in range(0, size_z-122, 122):
+                    image = sitk.RegionOfInterest(PaddedImage,(132,132,132),(x,y,z))
+                    mask = sitk.RegionOfInterest(img2,(122,122,122),(x,y,z))
 
-                    normalizedImage = sitk.GetArrayFromImage(normalizeFilter.Execute(image))
+                    sitk.WriteImage(image,'Train/Image'+str(counter)+".mhd")
+                    sitk.WriteImage(mask,'Train/Mask'+str(counter)+".mhd")
+
+                    image = sitk.GetArrayFromImage(image)
                     MaskSeg = sitk.GetArrayFromImage(mask)
 
-                    ImageTrain = np.reshape(normalizedImage,(1,128,128,128,1))
-                    MaskTrain = np.reshape(MaskSeg,(1,128,128,128,1))
+                    ImageTrain = np.reshape(image,(1,132,132,132,1))
+                    MaskTrain = np.reshape(MaskSeg,(1,122,122,122,1))
 
                     Data_X.append(ImageTrain)
                     Data_Y.append(MaskTrain)
@@ -55,7 +67,7 @@ def load3D_XY():
 
         
     
-    Data_X = np.reshape(Data_X,(counter,128,128,128,1))
-    Data_Y = np.reshape(Data_Y,(counter,128,128,128,1))
+    Data_X = np.reshape(Data_X,(counter,132,132,132,1))
+    Data_Y = np.reshape(Data_Y,(counter,122,122,122,1))
 
     return Data_X, Data_Y
