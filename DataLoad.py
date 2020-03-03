@@ -27,8 +27,8 @@ def load3D():
 
 
 def load3D_XY():
-    img1 = sitk.ReadImage('E:\PWeinberger\Data\Probe3_1000.mhd')
-    img2 = sitk.ReadImage('E:\PWeinberger\Data\Probe3_1000_bin_Inverted.mhd')
+    img1 = sitk.ReadImage('D:\PWeinberger\Data\Probe3_1000.mhd')
+    img2 = sitk.ReadImage('D:\PWeinberger\Data\Probe3_1000_bin_Inverted.mhd')
     normalizeFilter = sitk.NormalizeImageFilter()
 
     size_x = img1.GetWidth()
@@ -55,8 +55,8 @@ def load3D_XY():
                     image = sitk.RegionOfInterest(PaddedImage,(132,132,132),(x,y,z))
                     mask = sitk.RegionOfInterest(img2,(122,122,122),(x,y,z))
 
-                    sitk.WriteImage(image,'Train/Image'+str(counter)+".mhd")
-                    sitk.WriteImage(mask,'Train/Mask'+str(counter)+".mhd")
+                    #sitk.WriteImage(image,'Train/Image'+str(counter)+".mhd")
+                    #sitk.WriteImage(mask,'Train/Mask'+str(counter)+".mhd")
 
                     image = sitk.GetArrayFromImage(image)
                     MaskSeg = sitk.GetArrayFromImage(mask)
