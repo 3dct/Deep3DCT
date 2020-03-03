@@ -31,10 +31,6 @@ def load3D_XY():
     img2 = sitk.ReadImage('D:\PWeinberger\Data\Probe3_1000_bin_Inverted.mhd')
     normalizeFilter = sitk.NormalizeImageFilter()
 
-    size_x = img1.GetWidth()
-    size_y = img1.GetHeight()
-    size_z = img1.GetDepth()
-
 
     Data_X = [] 
     Data_Y = []
