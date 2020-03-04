@@ -47,7 +47,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_
 
 
 
-model.fit(X_train, y_train,batch_size=3,epochs=20,validation_split=0.2)
+model.fit(X_train, y_train,batch_size=1,epochs=20,validation_split=0.2)
 
 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)
@@ -56,7 +56,7 @@ TestPrediction = model.predict(X_test ,batch_size=2)
 
 index =0
 for result in TestPrediction:
-    Show.transformSave(result,index,(132,132,132))
+    Show.transformSave(result,index,(122,122,122))
     index = index +1
 
 model.save('Keras3d.hdf5')
