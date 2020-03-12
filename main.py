@@ -47,17 +47,17 @@ X_high,Y_high = DataLoad.load3D_XY('E:\DATA\AI_Referenz_CFK_3_3um_Probe2_60kV_no
 'E:\DATA\AI_Referenz_CFK_3_3um_Probe2_60kV_noinlMED-BHC0_man16bit+VS_Calibrated_1220x854x976\General_otsu_BIN_AI_Referenz_CFK_3_3um_Probe2_60kV_noinlMED-BHC0_man16bit+VS_Calibrated_1220x854x976.mhd')
 X_train, X_test, y_train, y_test = train_test_split(X_high, Y_high, test_size=0.2, random_state=1)
 
-#load split low resilution
-X_low,Y_low = DataLoad.load3D_XY('E:\weinberger\Probe2.mhd','E:\weinberger\Probe2_bin.mhd')
-X_train_low, X_test_low, y_train_low, y_test_low = train_test_split(X_low, Y_low, test_size=0.2, random_state=1)
+# #load split low resilution
+# X_low,Y_low = DataLoad.load3D_XY('E:\weinberger\Probe2.mhd','E:\weinberger\Probe2_bin.mhd')
+# X_train_low, X_test_low, y_train_low, y_test_low = train_test_split(X_low, Y_low, test_size=0.2, random_state=1)
 
-#merge high and low
-X_train = np.vstack([X_train, X_train_low])
-X_test = np.vstack([X_test, X_test_low])
-y_train = np.vstack([y_train,y_train_low])
-y_test = np.vstack([y_test,y_test_low])
+# #merge high and low
+# X_train = np.vstack([X_train, X_train_low])
+# X_test = np.vstack([X_test, X_test_low])
+# y_train = np.vstack([y_train,y_train_low])
+# y_test = np.vstack([y_test,y_test_low])
 
-model.fit(X_train, y_train,batch_size=1,epochs=30,validation_split=0.2)
+model.fit(X_train, y_train,batch_size=1,epochs=10,validation_split=0.2)
 
 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)
