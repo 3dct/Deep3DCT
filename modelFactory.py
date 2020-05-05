@@ -32,7 +32,7 @@ def getModel(modelName = 'unet3D'):
 
     execute_model = selected_model
 
-    execute_model.compile(optimizer = Adam(lr = 1e-4, decay=0.25), loss = dice_coef_loss, metrics = ['accuracy'])
+    execute_model.compile(optimizer = Adam(lr = 8e-5, decay=0.2), loss = dice_coef_loss, metrics = ['accuracy'])
     execute_model.summary()
 
     return execute_model
