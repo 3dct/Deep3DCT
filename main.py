@@ -6,16 +6,21 @@ import os
 #os.environ["KERAS_BACKEND"] = "mxnet"
 
 from modelFactory import getModel
-from data import *
+#from data import *
 import keras2onnx
 import DataLoad 
-from keras.callbacks.callbacks import *
+from keras.callbacks import *
 from sklearn.model_selection import train_test_split
 import numpy as np
 
 import Show
 
 import sys
+
+import tensorflow as tf
+from tensorflow import keras
+
+print(tf.version.VERSION)
 
 #from isensee2017 import *
 
@@ -48,7 +53,9 @@ print ('Number of arguments:' + str(len(sys.argv)) + 'arguments.')
 print ('Argument List:' + str(sys.argv))
 
 if(len(sys.argv) >= 3):
-    X_high,Y_high = DataLoad.load3D_XY(sys.argv[1], sys.argv[2])
+    #X_high,Y_high = DataLoad.load3D_XY(sys.argv[1], sys.argv[2])
+
+    gen_3D = DataLoad.load3D(sys.argv[1], sys.argv[2], epochs=100)
 
 else:
     #load split high resolution
@@ -64,7 +71,7 @@ if(len(sys.argv) >= 4):
 
 
 
-X_train, X_test, y_train, y_test = train_test_split(X_high, Y_high, test_size=0.2, random_state=1)
+#X_train, X_test, y_train, y_test = train_test_split(X_high, Y_high, test_size=0.2, random_state=1)
 
 # #load split low resilution
 # X_low,Y_low = DataLoad.load3D_XY('D:\weinberger\Probe2.mhd','D:\weinberger\Probe2_bin.mhd')
@@ -76,18 +83,20 @@ X_train, X_test, y_train, y_test = train_test_split(X_high, Y_high, test_size=0.
 # y_train = np.vstack([y_train,y_train_low])
 # y_test = np.vstack([y_test,y_test_low])
 
-filepath = "Checkpoints\saved-model-{epoch:02d}-{val_loss:.2f}.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=False, mode='max')
+filepath = "Checkpoints\saved-model-{epoch:02d}-{loss:.2f}.hdf5"
+checkpoint = keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=False, mode='max')
 
 if(len(sys.argv) >= 5):
     model.load_weights(sys.argv[4])
 
-model.fit(X_train, y_train,batch_size=3,epochs=100,validation_split=0.2, callbacks=[checkpoint])
+model.fit(x=gen_3D , callbacks=[checkpoint],steps_per_epoch=500, epochs=100)
 
-
+""" 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)
 
 TestPrediction = model.predict(X_test ,batch_size=2)
+
+
 
 index =0
 for result in TestPrediction:
@@ -99,7 +108,7 @@ model.save(modelName + '.hdf5')
 model.save_weights(modelName + '_weights.h5')
 
 print(TestResults)
-
+ """
 #results = model.predict(data)
 
 #for i in range(len(results)):
@@ -109,8 +118,8 @@ print(TestResults)
 #results = model.predict_generator(testGene,30,verbose=1)
 #saveResult("data/membrane/test",results)
 
-onnx_model = keras2onnx.convert_keras(model, model.name,target_opset=8)
+""" onnx_model = keras2onnx.convert_keras(model, model.name,target_opset=8)
 
 import onnx
 temp_model_file = modelName + '.onnx'
-onnx.save(onnx_model, temp_model_file)
+onnx.save(onnx_model, temp_model_file) """

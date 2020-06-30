@@ -89,4 +89,4 @@ def myshow3d(img, xslices=[], yslices=[], zslices=[], title=None, margin=0.05, d
 def transformSave(ImgArray, index=0, shape=(128,128,128), name='Result_'):
     img = np.reshape(ImgArray,shape)
     outImg = sitk.GetImageFromArray(img)
-    sitk.WriteImage(outImg,name + str(index)+".mhd")
+    sitk.WriteImage(outImg,"Out\\"+name + str(index)+".mhd")

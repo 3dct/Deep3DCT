@@ -11,10 +11,10 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "D:\\PWeinberger\\Mouse\\Data.mhd" ,
-                "D:\\PWeinberger\\Mouse\\TestFirst.mhd", 
-                "MouseModel",
-                "Keras3d.hdf5"
+                "E:\\Julia\\CR-sGF24-1-2um-327N-new-bhc8-16bit-1587x1105x1800-woBG.mhd", 
+                "E:\\Julia\\327N-DefectVis-bin.mhd" ,
+                "TestModel"
+                ,"Keras3d.hdf5"
             ]
         }
     ]
