@@ -2,7 +2,7 @@ import SimpleITK as sitk
 import numpy as np
 import Show 
 
-def load3D(image, mask, numberOfImages=500, epochs=10, batch_size=1):
+def load3D(image, mask, numberOfImages=1000, epochs=10, batch_size=1):
     img1 = sitk.ReadImage(image)
     img2 = sitk.ReadImage(mask)
     normalizeFilter = sitk.NormalizeImageFilter()
@@ -22,9 +22,12 @@ def load3D(image, mask, numberOfImages=500, epochs=10, batch_size=1):
 
         counter = 0
 
-        for x in range(0, size_x-121, 122):
-            for y in range(0, size_y-121, 122):
-                for z in range(0, size_z-121, 122):
+        ImageTrain = None
+        MaskTrain = None
+
+        for x in range(122, size_x-121, 122):
+            for y in range(122, size_y-121, 122):
+                for z in range(122, size_z-121, 122):
                     image = sitk.RegionOfInterest(PaddedImage,(132,132,132),(x,y,z))
                     mask = sitk.RegionOfInterest(img2,(122,122,122),(x,y,z))
 
@@ -34,11 +37,12 @@ def load3D(image, mask, numberOfImages=500, epochs=10, batch_size=1):
                     image = sitk.GetArrayFromImage(image)
                     MaskSeg = sitk.GetArrayFromImage(mask)
 
+
                     ImageTrain = np.reshape(image,(1,132,132,132,1))
                     MaskTrain = np.reshape(MaskSeg,(1,122,122,122,1))
 
                     counter = counter +1
-                    if counter<=numberOfImages:
+                    if ((counter<=numberOfImages)) :
                         yield (ImageTrain,MaskTrain)
 
 

@@ -5,6 +5,8 @@ import os
 
 #os.environ["KERAS_BACKEND"] = "mxnet"
 
+os.environ["TF_KERAS"] = "1"
+
 from modelFactory import getModel
 #from data import *
 import keras2onnx
@@ -21,6 +23,10 @@ import tensorflow as tf
 from tensorflow import keras
 
 print(tf.version.VERSION)
+
+gpus = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(gpus[0], True)
+
 
 #from isensee2017 import *
 
@@ -55,7 +61,7 @@ print ('Argument List:' + str(sys.argv))
 if(len(sys.argv) >= 3):
     #X_high,Y_high = DataLoad.load3D_XY(sys.argv[1], sys.argv[2])
 
-    gen_3D = DataLoad.load3D(sys.argv[1], sys.argv[2], epochs=100)
+    gen_3D = DataLoad.load3D(sys.argv[1], sys.argv[2], epochs=10)
 
 else:
     #load split high resolution
@@ -89,7 +95,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1
 if(len(sys.argv) >= 5):
     model.load_weights(sys.argv[4])
 
-model.fit(x=gen_3D , callbacks=[checkpoint],steps_per_epoch=500, epochs=100)
+model.fit(x=gen_3D , callbacks=[checkpoint],steps_per_epoch=1000, epochs=10)
 
 """ 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)
@@ -103,12 +109,13 @@ for result in TestPrediction:
     Show.transformSave(result,index,(122,122,122))
     index = index +1
 
+print(TestResults)
+ """
+
 model.save(modelName + '.hdf5')
 
 model.save_weights(modelName + '_weights.h5')
 
-print(TestResults)
- """
 #results = model.predict(data)
 
 #for i in range(len(results)):
@@ -118,8 +125,8 @@ print(TestResults)
 #results = model.predict_generator(testGene,30,verbose=1)
 #saveResult("data/membrane/test",results)
 
-""" onnx_model = keras2onnx.convert_keras(model, model.name,target_opset=8)
+onnx_model = keras2onnx.convert_keras(model, model.name,target_opset=8)
 
 import onnx
 temp_model_file = modelName + '.onnx'
-onnx.save(onnx_model, temp_model_file) """
+onnx.save(onnx_model, temp_model_file)

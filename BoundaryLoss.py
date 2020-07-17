@@ -29,7 +29,7 @@ def surface_loss(y_true, y_pred):
     return K.mean(multipled)
 
 
-def gl_sl_wrapper(alpha):
+def gl_sl_wrapper(alpha=0.5):
     def gl_sl(y_true, y_pred):
         return alpha * dice_coef_loss(y_true, y_pred) + (1 - alpha) * surface_loss(y_true, y_pred)
     return gl_sl

@@ -73,7 +73,7 @@ def predicted_positives(y_true, y_pred):
 def f1_m(y_true, y_pred):
     precision = precision_m(y_true, y_pred)
     recall = recall_m(y_true, y_pred)
-    return 2*((precision*recall)/(precision+recall+K.epsilon()))
+    return -2*((precision*recall)/(precision+recall+K.epsilon()))
 
 def dice1(y_true, y_pred, eps=1e-3):
     weights = 1./(K.sum(y_true, axis=[0,1,2,3])+eps)
