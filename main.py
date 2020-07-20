@@ -61,7 +61,7 @@ print ('Argument List:' + str(sys.argv))
 if(len(sys.argv) >= 3):
     #X_high,Y_high = DataLoad.load3D_XY(sys.argv[1], sys.argv[2])
 
-    gen_3D = DataLoad.load3D(sys.argv[1], sys.argv[2], epochs=10)
+    gen_3D = DataLoad.load3D(sys.argv[1], sys.argv[2], epochs=10,numberOfImages=240)
 
 else:
     #load split high resolution
@@ -95,7 +95,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath, monitor='loss', verbose=1
 if(len(sys.argv) >= 5):
     model.load_weights(sys.argv[4])
 
-model.fit(x=gen_3D , callbacks=[checkpoint],steps_per_epoch=1000, epochs=10)
+model.fit(x=gen_3D , callbacks=[checkpoint],steps_per_epoch=240, epochs=10)
 
 """ 
 TestResults = model.evaluate(X_test,y_test,batch_size=2)

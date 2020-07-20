@@ -39,7 +39,7 @@ def getModel(modelName = 'unet3D'):
 
     execute_model = selected_model
 
-    execute_model.compile(optimizer = Nadam(lr = 8e-5), loss = FocalTverskyLoss, metrics = ['accuracy', f1_m,precision_m, recall_m, true_positives, predicted_positives])
+    execute_model.compile(optimizer = Nadam(lr = 4e-5), loss = FocalTverskyLoss, metrics = ['accuracy', f1_m,precision_m, recall_m, true_positives, predicted_positives])
     execute_model.summary()
 
     return execute_model

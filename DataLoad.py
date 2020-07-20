@@ -25,9 +25,9 @@ def load3D(image, mask, numberOfImages=1000, epochs=10, batch_size=1):
         ImageTrain = None
         MaskTrain = None
 
-        for x in range(122, size_x-121, 122):
-            for y in range(122, size_y-121, 122):
-                for z in range(122, size_z-121, 122):
+        for x in range(0, size_x-121, 122):
+            for y in range(0, size_y-121, 122):
+                for z in range(0, size_z-121, 122):
                     image = sitk.RegionOfInterest(PaddedImage,(132,132,132),(x,y,z))
                     mask = sitk.RegionOfInterest(img2,(122,122,122),(x,y,z))
 
@@ -37,13 +37,18 @@ def load3D(image, mask, numberOfImages=1000, epochs=10, batch_size=1):
                     image = sitk.GetArrayFromImage(image)
                     MaskSeg = sitk.GetArrayFromImage(mask)
 
+                    voxelNotzero = np.count_nonzero(MaskSeg)
 
-                    ImageTrain = np.reshape(image,(1,132,132,132,1))
-                    MaskTrain = np.reshape(MaskSeg,(1,122,122,122,1))
 
-                    counter = counter +1
-                    if ((counter<=numberOfImages)) :
-                        yield (ImageTrain,MaskTrain)
+                    if (voxelNotzero>20 or counter%9==0):
+                        ImageTrain = np.reshape(image,(1,132,132,132,1))
+                        MaskTrain = np.reshape(MaskSeg,(1,122,122,122,1))
+
+                        counter = counter +1
+
+                    
+                        if ((counter<=numberOfImages)) :
+                            yield (ImageTrain,MaskTrain)
 
 
 def load3D_XY(image, mask):

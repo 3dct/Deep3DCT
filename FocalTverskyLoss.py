@@ -22,7 +22,7 @@ def TverskyLoss(targets, inputs, alpha=ALPHA, beta=BETA, smooth=1e-6):
         return 1 - Tversky
 
 #Keras
-ALPHA = 0.3
+ALPHA = 0.8
 BETA = 1-ALPHA
 GAMMA = 1
 

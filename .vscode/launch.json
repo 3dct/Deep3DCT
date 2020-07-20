@@ -11,10 +11,10 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "D:\\Julia\\CR-sGF24-1-2um-396N-new-bhc8-16bit-1587x1105x1800.mhd", 
-                "D:\\Julia\\396N-DefectVis-bin.mhd" ,
-                "TestModel2"
-                ,"checkpoints\\saved-model-100-0.00.hdf5"
+                "E:\\Julia\\CR-sGF24-1-2um-327N-new-bhc8-16bit-1587x1105x1800.mhd", 
+                "E:\\Julia\\327N-DefectVis-bin.mhd" ,
+                "TestModel3"
+               ,"checkpoints\\saved-model-05-0.13.hdf5"
             ]
         }
     ]
