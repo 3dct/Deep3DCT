@@ -39,7 +39,7 @@ def getModel(modelName = 'unet3D'):
 
     execute_model = selected_model
 
-    execute_model.compile(optimizer = Nadam(lr = 4e-5), loss = FocalTverskyLoss, metrics = ['accuracy', f1_m,precision_m, recall_m, true_positives, predicted_positives])
+    execute_model.compile(optimizer = Nadam(learning_rate=2e-5), loss = FocalTverskyLoss, metrics = ['accuracy', f1_m,precision_m, recall_m, true_positives, predicted_positives])
     execute_model.summary()
 
     return execute_model
@@ -68,9 +68,8 @@ def HyperparameterTune(x_train, y_train, x_val, y_val, params):
     #execute_model.summary()
     from talos.utils import early_stopper
 
-    out = execute_model.fit(x_train, y_train,batch_size=3,epochs=params["epochs"], validation_data=(x_val, y_val),
-                     verbose=0, callbacks = [early_stopper(epochs=params['epochs'],  
-                                                    monitor='val_accuracy')])
+    out = execute_model.fit(x_train, y_train,batch_size=1,epochs=params["epochs"], validation_data=(x_val, y_val),
+                     verbose=1)
 
     return out, execute_model
     
