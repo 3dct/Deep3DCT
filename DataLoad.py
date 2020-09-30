@@ -87,9 +87,6 @@ def load3D_XY(image, mask, filterData=False, border=0):
                     image = sitk.RegionOfInterest(PaddedImage,(132,132,132),(x,y,z))
                     mask = sitk.RegionOfInterest(img2,(122,122,122),(x,y,z))
 
-                    #sitk.WriteImage(image,'Train/Image'+str(counter)+".mhd")
-                    #sitk.WriteImage(mask,'Train/Mask'+str(counter)+".mhd")
-
                     image = sitk.GetArrayFromImage(image)
                     MaskSeg = sitk.GetArrayFromImage(mask)
 
@@ -154,14 +151,14 @@ def load3D_file_generator(PathsTrain, PathsLabel, epochs=10, batch_size=1):
             if x%batch_size == 0:
                 Data_X = np.reshape(ImageTrain,(len(ImageTrain),132,132,132,1))
                 Data_Y = np.reshape(MaskTrain,(len(MaskTrain),122,122,122,1))
-                yield (Data_X,Data_Y)
+                yield (Data_X,Data_Y.astype(np.float32))
                 ImageTrain = []
                 MaskTrain = []
 
         if len(ImageTrain) > 0:
             Data_X = np.reshape(ImageTrain,(len(ImageTrain),132,132,132,1))
             Data_Y = np.reshape(MaskTrain,(len(MaskTrain),122,122,122,1))
-            yield (Data_X,Data_Y)
+            yield (Data_X,Data_Y.astype(np.float32))
 
 
 def getPaths(dirTrain, dirLabel, TrainDatasize):

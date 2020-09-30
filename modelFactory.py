@@ -1,5 +1,4 @@
 from model import unet, unet3D
-from VnetModel import vnet3D
 from keras.models import *
 from keras.optimizers import *
 from keras.utils import multi_gpu_model
@@ -8,7 +7,6 @@ from keras import backend as K
 from BoundaryLoss import surface_loss, gl_sl_wrapper
 from FocalTverskyLoss import FocalTverskyLoss
 
-import talos
 
 
 
@@ -23,7 +21,6 @@ def getModel(modelName = 'unet3D'):
     switcher = {
         "unet": unet(),
         "unet3D": unet3D(),
-        #"vnet3D": vnet3D(),
     }
 
     selected_model = switcher.get(modelName)
@@ -50,9 +47,7 @@ def HyperparameterTune(x_train, y_train, x_val, y_val, params):
     model = []
 
     switcher = {
-        #"unet": unet(),
         "unet3D": unet3D(stage2=params["stage2"]),
-        #"vnet3D": vnet3D(),
     }
 
     selected_model = switcher.get(params["model"])
@@ -65,7 +60,6 @@ def HyperparameterTune(x_train, y_train, x_val, y_val, params):
         optimizer = Nadam(lr = params["lr"])
 
     execute_model.compile(optimizer = optimizer, loss = [lambda y_true,y_pred: FocalTverskyLoss(y_true,y_pred,params["alpha"],1-params["alpha"],params["gamma"])] , metrics = ['accuracy', f1_m])
-    #execute_model.summary()
     from talos.utils import early_stopper
 
     out = execute_model.fit(x_train, y_train,batch_size=1,epochs=params["epochs"], validation_data=(x_val, y_val),
