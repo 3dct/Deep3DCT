@@ -26,7 +26,7 @@ from tensorflow import keras
 TrainingsData = "Training"
 modelName = "Model2"
 numberOfChunksFortraining = 6
-
+batchSize = 1
 
 print(tf.version.VERSION)
 
@@ -38,8 +38,8 @@ numEpochs = 50
 X, Y, ValX, ValY = DataLoad.getPaths(TrainingsData + '\\Train',TrainingsData + '\\Label',numberOfChunksFortraining)
 
 
-TrainGenerator = DataLoad.load3D_file_generator(X,Y,epochs=numEpochs)
-ValGenerator = DataLoad.load3D_file_generator(ValX,ValY,epochs=numEpochs)
+TrainGenerator = DataLoad.load3D_file_generator(X,Y,epochs=numEpochs,batch_size=batchSize)
+ValGenerator = DataLoad.load3D_file_generator(ValX,ValY,epochs=numEpochs,batch_size=batchSize)
 
 model = getModel("unet3D")
 

@@ -139,8 +139,8 @@ def load3D_file_generator(PathsTrain, PathsLabel, epochs=10, batch_size=1):
 
         for x in range(len(PathsTrain)):
             
-            image = sitk.ReadImage(PathsTrain[i])
-            mask = sitk.ReadImage(PathsLabel[i])
+            image = sitk.ReadImage(PathsTrain[x])
+            mask = sitk.ReadImage(PathsLabel[x])
 
             image = sitk.GetArrayFromImage(image)
             MaskSeg = sitk.GetArrayFromImage(mask)
