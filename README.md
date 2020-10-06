@@ -23,22 +23,20 @@ To do this a mirror padding is added and the data is splitted. As input a mhd Vo
 
 ### Training
 
-The model is trained for 5 epochs.
+The model is trained for 20 epochs.
 
-After 5 epochs, calculated accuracy is about 0.97.
+After 20 epochs, calculated accuracy is about 0.98.
 
-Loss function for the training is basically just a binary crossentropy.
+Loss function for the training is a focal Tversky loss used.
 
 
 ---
-
-## How to use
 
 ### Dependencies
 
 
 * Tensorflow
-* Keras >= 1.0
+* Keras >= 2.3
 * keras2onnx
 * sklearn
 * simpleITK

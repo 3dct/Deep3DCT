@@ -24,16 +24,16 @@ from tensorflow import keras
 
 #set this values
 TrainingsData = "Training"
-modelName = "Model2"
+modelName = "Model"
 numberOfChunksFortraining = 6
 batchSize = 1
+numEpochs = 20
 
 print(tf.version.VERSION)
 
 # gpus = tf.config.experimental.list_physical_devices('GPU')
 # tf.config.experimental.set_memory_growth(gpus[0], True)
 
-numEpochs = 50
 
 X, Y, ValX, ValY = DataLoad.getPaths(TrainingsData + '\\Train',TrainingsData + '\\Label',numberOfChunksFortraining)
 
@@ -79,7 +79,7 @@ init_layer(layer)
 
 #model.fit(x=gen_3D , callbacks=[checkpoint],steps_per_epoch=240, epochs=100)
 
-model.fit(TrainGenerator, validation_data=ValGenerator, steps_per_epoch= len(X)/batchSize, validation_steps=len(ValX)/batchSize, callbacks=[checkpoint], epochs=numEpochs)
+model.fit(TrainGenerator, validation_data=ValGenerator, steps_per_epoch= len(X)/batchSize, validation_steps=len(ValX)/batchSize-1, callbacks=[checkpoint], epochs=numEpochs)
 
 
 

@@ -137,7 +137,7 @@ def load3D_file_generator(PathsTrain, PathsLabel, epochs=10, batch_size=1):
 
 
 
-        for x in range(len(PathsTrain)):
+        for x in range(0,len(PathsTrain),1):
             
             image = sitk.ReadImage(PathsTrain[x])
             mask = sitk.ReadImage(PathsLabel[x])
@@ -147,6 +147,7 @@ def load3D_file_generator(PathsTrain, PathsLabel, epochs=10, batch_size=1):
 
             ImageTrain.append(np.reshape(image,(1,132,132,132,1)))
             MaskTrain.append(np.reshape(MaskSeg,(1,122,122,122,1)))
+
 
             if x%batch_size == 0:
                 Data_X = np.reshape(ImageTrain,(len(ImageTrain),132,132,132,1))
