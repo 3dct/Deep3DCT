@@ -1,8 +1,9 @@
 from keras import backend as K
 
+#More details see 
+#A Novel Focal Tversky loss function with improved Attention U-Net for lesion segmentation
+#https://arxiv.org/abs/1810.07842
 
-
-#Keras
 ALPHA = 0.5
 BETA = 0.5
 
@@ -21,7 +22,6 @@ def TverskyLoss(targets, inputs, alpha=ALPHA, beta=BETA, smooth=1e-6):
         
         return 1 - Tversky
 
-#Keras
 ALPHA = 0.3
 BETA = 1-ALPHA
 GAMMA = 1
